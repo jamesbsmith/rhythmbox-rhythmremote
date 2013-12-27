@@ -94,9 +94,11 @@ class Views:
         return "1"
     
     @staticmethod
-    @bottle.route("/play")
-    def play(self):
-        PlayerControl().play()
+    @bottle.route("/play/<name>")
+    def play(name):
+        # For firefox: Use cache to answer duplicate GET requests.
+        bottle.response.set_header('Cache-Control', 'max-age=1')
+        PlayerControl().play(name)
     
     @staticmethod 
     @bottle.route("/play_queue/<entry_id:int>")
@@ -111,16 +113,22 @@ class Views:
     @staticmethod
     @bottle.route("/prev")
     def play_previous():
+        # For firefox: Use cache to answer duplicate GET requests.
+        bottle.response.set_header('Cache-Control', 'max-age=1')
         PlayerControl().previous()
     
     @staticmethod
     @bottle.route("/next")
     def play_next():
+        # For firefox: Use cache to answer duplicate GET requests.
+        bottle.response.set_header('Cache-Control', 'max-age=1')
         PlayerControl().next()
     
     @staticmethod
     @bottle.route("/pause")
     def pause():
+        # For firefox: Use cache to answer duplicate GET requests.
+        bottle.response.set_header('Cache-Control', 'max-age=1')
         PlayerControl().pause()
     
     @staticmethod

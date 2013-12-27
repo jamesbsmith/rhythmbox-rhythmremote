@@ -110,8 +110,8 @@ class PlayerControl(object):
             entries.append((entry_id, title))
         return entries
         
-    def play(self):
-        self.__player.play()
+    def play(self, unused):
+        self.__player.playpause(unused)
         
     def play_entry(self, entry_id):
         self.__play_entry(entry_id, self.__library)
@@ -204,4 +204,4 @@ class PlayerControl(object):
             return None
         else:
             return self.__get_source_entries(self.__playlists[playlist])
-        
+

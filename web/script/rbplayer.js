@@ -203,7 +203,9 @@ function playerInfoUpdater(activePage) {
 						url: "/play_queue/" + id,
 						type: "GET"
 					}).success(function() {
-						$("#queue_popup").popup("close");
+   						$("#queue_popup").popup("close");
+						// Reload page to force restart of updateTimer (Nokia browser).
+						location.reload();
 					});
 				});
 				$queue_list.append($link);

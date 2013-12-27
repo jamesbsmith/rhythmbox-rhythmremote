@@ -29,7 +29,7 @@ Contributors:
 		    var updateTimer;
 			$(document).bind("pagechange", function() {
 				initialize();
-				
+
 				var updater = new playerInfoUpdater(true);
 				updater.update();
 				updateTimer = $.timer(function() {
@@ -92,7 +92,7 @@ Contributors:
                     </div>
                     <div data-role="controlgroup" data-type="horizontal">
                         <a class="prevButton control_button"  href="#" data-rb-action="prev"  data-role="button">Previous</a>
-                        <a class="playButton control_button"  href="#" data-rb-action="play"  data-role="button">Play</a>
+                        <a class="playButton control_button"  href="#" data-rb-action="play/unused"  data-role="button">Play</a>
                         <a class="pauseButton control_button" href="#" data-rb-action="pause" data-role="button">Pause</a>
                         <a class="stopButton control_button"  href="#" data-rb-action="stop"  data-role="button">Stop</a>
                         <a class="nextButton control_button"  href="#" data-rb-action="next"  data-role="button">Next</a>
