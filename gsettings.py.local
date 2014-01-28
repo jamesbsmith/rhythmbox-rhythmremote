@@ -1,0 +1,26 @@
+# ----------------------------------------------------------------------
+# - rhythmremote/gsettings.py
+# - This program and the accompanying materials
+# - are made available under the terms of the GNU Public License v3.0
+# - which accompanies this distribution, and is available at
+# - http://www.gnu.org/licenses/gpl.html
+# -
+# - Contributors:
+# -     James B. Smith - add schema file and preferences dialog.
+# ----------------------------------------------------------------------
+
+from gi.repository import Gio
+import os
+
+DCONF_DIR = 'org.gnome.rhythmbox.plugins.rhythmremote'
+
+# Use local dir for schema so root priviledges aren't needed to install
+GSETTINGS_SCHEMA_DIR = '~/.local/glib-2.0/schemas'
+
+schema_source = Gio.SettingsSchemaSource.new_from_directory(
+    os.path.expanduser(GSETTINGS_SCHEMA_DIR),
+    Gio.SettingsSchemaSource.get_default(),
+    False)
+schema = schema_source.lookup(DCONF_DIR, False)
+settings = Gio.Settings.new_full(schema, None, None)
+

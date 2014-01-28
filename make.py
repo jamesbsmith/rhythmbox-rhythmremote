@@ -7,12 +7,15 @@
 # - 
 # - Contributors:
 # -     Christian Ertler - initial API and implementation
+# -     James B. Smith - add schema file and preferences dialog
 # ------------------------------------------------------------------------------
 
 import os, sys, subprocess, shutil
 
 __plugin_dir = os.path.expanduser("~/.local/share/rhythmbox/plugins/")
 __plugin_name = "RhythmRemote"
+__schema_dir_local = os.path.expanduser("~/.local/glib-2.0/schemas/")
+__schema_file = "org.gnome.rhythmbox.plugins.rhythmremote.gschema.xml"
 
 
 def __cmd_exists(cmd):
@@ -50,17 +53,39 @@ def __check_dependencies():
         print("Either Rhythmbox is not installed or not in your PATH environment variable.")
         print("Please install Rhythmbox properly to continue.")
         exit(1)
-        
+
+    try:
+        subprocess.call(["which", "glib-compile-schemas"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except OSError:
+        print("glib-compile-schemas not found")
+        print("Please check your installation of glib2.")
+        exit(1)
+
 def __initialize_environment():
     if not os.path.exists(__plugin_dir):
         os.makedirs(__plugin_dir)
         print("Created Rhythmbox plugin-directory in: " + __plugin_dir)
-        
+
+def __initialize_schema_local():
+    if not os.path.exists(__schema_dir_local):
+        os.makedirs(__schema_dir_local)
+        print("Created local schema directory in: " + __schema_dir_local)
+    shutil.copy("gsettings.py.local", "gsettings.py")
+    shutil.copy(__schema_file, __schema_dir_local)
+    print("schema file " + __schema_file +  "copied to " + __schema_dir_local)
+
+    try:
+        subprocess.call(["glib-compile-schemas", __schema_dir_local], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("glib-compile-schemas compiled schema files in " + __schema_dir_local)
+    except OSError:
+        print("glib-compile-schemas failed to compile schema files in " + __schema_dir_local)
+        exit(1)
 
 
 if __name__ == "__main__":
     __check_dependencies()
     __initialize_environment()	
+    __initialize_schema_local()
 
     if len(sys.argv) > 1 and sys.argv[1] == "install":
          __install()

@@ -1,6 +1,6 @@
 [Plugin]
 Loader=python
-Module=src
+Module=rhythmremote
 IAge=2
 Name=RhythmRemote
 Description=A mobile web interface for Rhythmbox.
