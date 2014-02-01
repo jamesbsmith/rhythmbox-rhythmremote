@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+    <schema path="/org/gnome/rhythmbox/plugins/rhythmremote/" id="org.gnome.rhythmbox.plugins.rhythmremote">
+        <key type="i" name="server-port">
+            <default>8001</default>
+            <summary>TCPIP Port number.</summary>
+            <description>Defines the port number that the webserver connects to.</description>
+        </key>
+        <key type="s" name="server-address">
+            <default>"0.0.0.0"</default>
+            <summary>IP address.</summary>
+            <description>Defines the IP address that the webserver connects to.</description>
+        </key>
+    </schema>
+</schemalist>
