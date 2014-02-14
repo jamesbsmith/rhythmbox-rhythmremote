@@ -7,13 +7,14 @@ http://www.gnu.org/licenses/gpl.html
 
 Contributors:
     Christian Ertler - initial API and implementation
+    James B. Smith - improve browsing
 -->
 
 %import urllib
-<ul data-role="listview" data-inset="true" data-filter="true" data-autodividers="true">
+<ul data-role="listview" data-inset="true" data-filter="true" data-autodividers="false">
 	%for artist in artists:
-		%enc_artist = urllib.quote_plus(artist)
-	<li><a data-transition="slidefade" href="/albums/{{enc_artist}}">{{artist}}</a></li>
+		%enc_artist = urllib.quote_plus(artist[2])
+	<li><a data-transition="slidefade" href="/albums/{{enc_artist}}">{{artist[1]}}</a></li>
 	%end
 </ul>
 %rebase layout

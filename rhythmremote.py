@@ -7,7 +7,7 @@
 # -
 # - Contributors:
 # -     Christian Ertler - initial API and implementation
-# -     James B. Smith - add shema file and preferences dialog
+# -     James B. Smith - add schema file and preferences dialog
 # ----------------------------------------------------------------------
 
 import rb
