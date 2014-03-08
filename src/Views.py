@@ -61,6 +61,7 @@ class Views:
     @bottle.route("/albums/<artist:path>")
     @bottle.view("albums")
     def albums(artist):
+        print ("artist_enc is:", artist)
         artist = urllib.unquote_plus(artist)
         return dict(
             albums=order_set(DBAccess().get_albums_of_albumartist(artist)),
@@ -97,6 +98,12 @@ class Views:
     @bottle.route("/add_to_queue/<entry_id:int>")
     def add_to_queue(entry_id):
         PlayerControl().add_entry_to_queue(entry_id)
+        return "1"
+
+    @staticmethod
+    @bottle.route("/add_album_of_entry_to_queue/<entry_id:int>")
+    def view_add_album_of_entry_to_queue(entry_id):
+        PlayerControl().add_album_of_entry_to_queue(entry_id)
         return "1"
 
     @staticmethod

@@ -13,10 +13,19 @@ function initialize() {
 	var updater = new playerInfoUpdater();
 	
 	$(".ui-page-active a.popup_select_link").click(function() {
+	    alert("popup_select_link pressed!");
 		var entry_id = $(this).data("rb-entry-id");
 		$("#popup_select_" + entry_id).popup("open", {
 			transition : "pop"
 		});
+	});
+	
+	$(".ui-page-active a.album_popup_select_link").click(function() {
+	    alert("album_popup_select_link pressed!");
+		var enc_album = $(this).data("rb-album");
+		alert("album_popup_select_" + enc_album);
+		$("#album_popup_select_" + enc_album).show();
+		alert("album_popup_select done!");
 	});
 	
 	$(".ui-page-active a.track_link").click(function() {
@@ -57,6 +66,43 @@ function initialize() {
 			var entry_name = $link.data("rb-entry-name");
 			$("#popupTooltip > p.tooltip_content").text(
 					entry_name + " added to queue!");
+			$("#popupTooltip").popup("open", {
+				transition : "pop"
+			});
+		});
+	});
+
+	$(".ui-page-active a.album_link").click(function() {
+		var $link = $(this);
+		var entry_id = $link.data("rb-entry-id");
+		$.ajax({
+			url  : "/add_album_of_entry_to_queue/" + entry_id,
+			type : "GET"
+		}).success(function() {
+			$("#popup_select_" + entry_id).popup("close");
+			var entry_name = $link.data("rb-entry-name");
+			$("#popupTooltip > p.tooltip_content").text(
+					"album of " + entry_name + " added to queue!");
+			$("#popupTooltip").popup("open", {
+				transition : "pop"
+			});
+		});
+	});
+	
+	$(".ui-page-active a.add_album_to_queue_link").click(function() {
+		var $link = $(this);
+		var albumartist = $link.data("rb-albumartist");
+		var enc_album = $link.data("rb-enc-album");
+		var album = $link.data("rb-album");
+		$.ajax({
+			url  : "/add_album_to_queue/" + albumartist + "/" + enc_album,
+			type : "GET"
+		}).success(function() {
+			$("#album_popup_select_" + enc_album).popup("close");
+			var albumartist = $link.data("rb-albumartist");
+			var album = $link.data("rb-album");
+			$("#popupTooltip > p.tooltip_content").text(
+					albumartist + ":" + album + " added to queue!");
 			$("#popupTooltip").popup("open", {
 				transition : "pop"
 			});

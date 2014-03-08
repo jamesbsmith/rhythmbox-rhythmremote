@@ -174,6 +174,17 @@ class PlayerControl(object):
     def add_entry_to_queue(self, entry_id):
         self.__queue.add_entry(self.__dbaccess.get_entry(entry_id), -1)
 
+    def add_album_of_entry_to_queue(self, entry_id):
+        entry = self.__dbaccess.get_entry(entry_id)
+        print ("entry is: ", entry)
+        albumartist = entry.get_string(RB.RhythmDBPropType.ALBUM_ARTIST_FOLDED)
+        album = entry.get_string(RB.RhythmDBPropType.ALBUM)
+        print ("albumartist, album is: ", albumartist, album)
+        tracks = self.order_track_set(
+            self.__dbaccess.get_tracks_of_album(albumartist, album))
+        for track in tracks:
+            self.__queue.add_entry(self.__dbaccess.get_entry(track[0]), -1)
+
     def stop(self):
         self.__player.stop()
 
@@ -253,3 +264,6 @@ class PlayerControl(object):
             return None
         else:
             return self.__get_source_entries(self.__playlists[playlist])
+
+    def order_track_set(self, _set):
+        return sorted(list(_set), cmp=lambda x,y: cmp(x[1], y[1]))
