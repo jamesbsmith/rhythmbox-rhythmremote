@@ -107,6 +107,14 @@ class Views:
         return "1"
 
     @staticmethod
+    @bottle.route("/add_album_to_queue/<artist:path>/<album:path>")
+    def view_add_album_to_queue(artist, album):
+        artist = urllib.unquote_plus(artist)
+        album = urllib.unquote_plus(album)
+        PlayerControl().add_album_to_queue(artist, album)
+        return "1"
+
+    @staticmethod
     @bottle.route("/play/<name>")
     def play(name):
         # For firefox: Use cache to answer duplicate GET requests.

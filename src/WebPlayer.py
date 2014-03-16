@@ -31,15 +31,15 @@ class DBAccess(object):
 
     def get_all_albumartists(self):
         entries = set()
-        entry_type1 = RB.RhythmDBPropType.ALBUM_ARTIST_SORTNAME
-        entry_type2 = RB.RhythmDBPropType.ALBUM_ARTIST
-        entry_type3 = RB.RhythmDBPropType.ALBUM_ARTIST_FOLDED
+        type_artist_sortname = RB.RhythmDBPropType.ALBUM_ARTIST_SORTNAME
+        type_artist = RB.RhythmDBPropType.ALBUM_ARTIST
+        type_artist_folded = RB.RhythmDBPropType.ALBUM_ARTIST_FOLDED
         for row in self.library.props.base_query_model:
             entry = row[0]
             entries.add((
-                entry.get_string(entry_type1),
-                entry.get_string(entry_type2),
-                entry.get_string(entry_type3)))
+                entry.get_string(type_artist_sortname),
+                entry.get_string(type_artist),
+                entry.get_string(type_artist_folded)))
         return entries
 
     def get_all_genres(self):
@@ -48,9 +48,15 @@ class DBAccess(object):
     def get_albums_of_albumartist(self, artist):
         query_model = self.__do_single_query(
             RB.RhythmDBPropType.ALBUM_ARTIST_FOLDED, artist)
-        albums = set()
+        album_list = set()
         for row in query_model:
-            albums.add(row[0].get_string(RB.RhythmDBPropType.ALBUM))
+            album_list.add(row[0].get_string(RB.RhythmDBPropType.ALBUM))
+        albums = set()
+        album_id = 0
+        # Create album_id to use in html id attributes
+        for album in album_list:
+            album_id = album_id + 1
+            albums.add((album, album_id))
         return albums
 
     def get_tracks_of_album(self, albumartist, album):
@@ -176,9 +182,14 @@ class PlayerControl(object):
 
     def add_album_of_entry_to_queue(self, entry_id):
         entry = self.__dbaccess.get_entry(entry_id)
-        print ("entry is: ", entry)
         albumartist = entry.get_string(RB.RhythmDBPropType.ALBUM_ARTIST_FOLDED)
         album = entry.get_string(RB.RhythmDBPropType.ALBUM)
+        tracks = self.order_track_set(
+            self.__dbaccess.get_tracks_of_album(albumartist, album))
+        for track in tracks:
+            self.__queue.add_entry(self.__dbaccess.get_entry(track[0]), -1)
+
+    def add_album_to_queue(self, albumartist, album):
         print ("albumartist, album is: ", albumartist, album)
         tracks = self.order_track_set(
             self.__dbaccess.get_tracks_of_album(albumartist, album))

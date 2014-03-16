@@ -12,8 +12,7 @@
 function initialize() {
 	var updater = new playerInfoUpdater();
 	
-	$(".ui-page-active a.popup_select_link").click(function() {
-	    alert("popup_select_link pressed!");
+	$(".ui-page-active a.track_popup_select_link").click(function() {
 		var entry_id = $(this).data("rb-entry-id");
 		$("#popup_select_" + entry_id).popup("open", {
 			transition : "pop"
@@ -21,14 +20,13 @@ function initialize() {
 	});
 	
 	$(".ui-page-active a.album_popup_select_link").click(function() {
-	    alert("album_popup_select_link pressed!");
-		var enc_album = $(this).data("rb-album");
-		alert("album_popup_select_" + enc_album);
-		$("#album_popup_select_" + enc_album).show();
-		alert("album_popup_select done!");
+		var album_id = $(this).data("rb-album-id");
+        $("#album_popup_select_" + album_id).popup("open", {
+            transition : "pop"
+        });
 	});
 	
-	$(".ui-page-active a.track_link").click(function() {
+	$(".ui-page-active a.track_play_link").click(function() {
 		var $link = $(this);
 		var entry_id = $link.data("rb-entry-id");
 		$.ajax({
@@ -55,7 +53,7 @@ function initialize() {
 		});
 	});
 	
-	$(".ui-page-active a.queue_link").click(function() {
+	$(".ui-page-active a.track_queue_link").click(function() {
 		var $link = $(this);
 		var entry_id = $link.data("rb-entry-id");
 		$.ajax({
@@ -72,7 +70,8 @@ function initialize() {
 		});
 	});
 
-	$(".ui-page-active a.album_link").click(function() {
+
+	$(".ui-page-active a.track_album_queue_link").click(function() {
 		var $link = $(this);
 		var entry_id = $link.data("rb-entry-id");
 		$.ajax({
@@ -88,17 +87,18 @@ function initialize() {
 			});
 		});
 	});
-	
-	$(".ui-page-active a.add_album_to_queue_link").click(function() {
+
+
+	$(".ui-page-active a.album_queue_link").click(function() {
 		var $link = $(this);
-		var albumartist = $link.data("rb-albumartist");
+		var enc_artist = $link.data("rb-enc-artist");
 		var enc_album = $link.data("rb-enc-album");
-		var album = $link.data("rb-album");
+		var album_id = $link.data("rb-album-id");
 		$.ajax({
-			url  : "/add_album_to_queue/" + albumartist + "/" + enc_album,
+			url  : "/add_album_to_queue/" + enc_artist + "/" + enc_album,
 			type : "GET"
 		}).success(function() {
-			$("#album_popup_select_" + enc_album).popup("close");
+			$("#album_popup_select_" + album_id).popup("close");
 			var albumartist = $link.data("rb-albumartist");
 			var album = $link.data("rb-album");
 			$("#popupTooltip > p.tooltip_content").text(

@@ -13,7 +13,7 @@ Contributors:
 <ul data-role="listview" data-inset="true" 
         data-filter="true" data-autodividers="false">
 	%for track in tracks:
-	<li><a class="popup_select_link" 
+	<li><a class="track_popup_select_link" 
 	    data-rb-entry-id="{{track[0]}}" 
 	    href="" 
 	    data-transition="pop" 
@@ -26,18 +26,22 @@ Contributors:
 	<ul data-role="listview" data-inset="true" 
 	        style="min-width:210px;" data-theme="b">
 		<li data-role="divider" data-theme="a">Select action</li>
-		<li><a class="track_link" 
+		<li><a class="track_play_link" 
 		    data-rb-entry-id="{{track[0]}}" 
 		    data-rb-entry-name="{{track[2]}}" 
-		    href="#">Play</a></li>
-		<li><a class="queue_link" 
+		    href="#">Play track</a></li>
+		<li><a class="track_queue_link" 
 		    data-rb-entry-id="{{track[0]}}" 
 		    data-rb-entry-name="{{track[2]}}" 
-		    href="#">Add to Queue</a></li>
-		<li><a class="album_link" 
+		    href="#">Add track to Queue</a></li>
+		<li><a class="track_album_play_link" 
 		    data-rb-entry-id="{{track[0]}}" 
 		    data-rb-entry-name="{{track[2]}}" 
-		    href="#">Add album to Queue</a></li>
+		    href="#">Play album</a></li>
+		<li><a class="track_album_queue_link" 
+		    data-rb-entry-id="{{track[0]}}" 
+		    data-rb-entry-name="{{track[2]}}" 
+		    href="#">Add album to queue</a></li>
 		<li><a href="#">Add to Playlist</a></li>
 		<li><a href="#">Properties</a></li>
 	</ul>
