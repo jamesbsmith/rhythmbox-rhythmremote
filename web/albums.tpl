@@ -30,17 +30,28 @@ Contributors:
 </ul>
 %for album in albums:
     %enc_album = urllib.quote_plus(album[0])
-    <div data-role="popup" data-position-to="origin" 
+    <div data-role="popup" 
+            data-position-to="origin" 
             id="album_popup_select_{{album[1]}}" data-theme="a">
-        <ul data-role="listview" data-inset="true"
-                style="min-width:210px;" data-theme="b">
-            <li data-role="divider" data-theme="a">Select Album Action</li>
-            <li><a class="album_play_link" data-rb-enc-album="{{enc_album}}"
-                    data-rb-album="{{album[0]}}" data-rb-album-id="{{album[1]}}"
-                    data-rb-albumartist="{{artist}}" href="#">Play album</a></li>
-            <li><a class="album_queue_link" data-rb-enc-album="{{enc_album}}"
-                    data-rb-album="{{album[0]}}" data-rb-album-id="{{album[1]}}"
-                    data-rb-albumartist="{{artist}}" data-rb-enc-artist="{{enc_artist}}"
+        <ul data-role="listview" 
+                data-inset="true"
+                style="min-width:210px;" 
+                data-theme="b">
+            <li data-role="divider" 
+                    data-theme="a">Select Album Action</li>
+            <li><a class="album_play_link" 
+                    data-rb-enc-album="{{enc_album}}"
+                    data-rb-album="{{album[0]}}" 
+                    data-rb-album-id="{{album[1]}}"
+                    data-rb-albumartist="{{artist}}" 
+                    data-rb-enc-artist="{{enc_artist}}"
+                    href="#">Play album</a></li>
+            <li><a class="album_queue_link" 
+                    data-rb-enc-album="{{enc_album}}"
+                    data-rb-album="{{album[0]}}" 
+                    data-rb-album-id="{{album[1]}}"
+                    data-rb-albumartist="{{artist}}" 
+                    data-rb-enc-artist="{{enc_artist}}"
                     href="#">Add album to queue</a></li>
             <li><a href="#">Add album to Playlist</a></li>
             <li><a href="#">Properties</a></li>

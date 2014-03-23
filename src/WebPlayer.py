@@ -12,13 +12,20 @@
 # -         - Use album-artists sorted by sortname.
 # -         - Add disc-track numbers, sort by them in album/tracks view.
 # -         - Use album_artist_folded as lookup key (fixes AC/DC issue).
+# -         - Add 'Add album to Queue' and 'Play album' functions.            
 # ----------------------------------------------------------------------------
 
 from gi.repository import RB, GLib
 
 
+# 'object' is a new-style class, the base class for all built-in
+# types. Defining a new class as a sub class of 'object' is the
+# easiest way to define a new class as a new-style class in 
+# python 2.x. New-style classes are needed for the 'super()' function. 
 class DBAccess(object):
 
+    # rbsell is assigned when plugin is activated, in the
+    # plugin class's do_activate() function.
     rbshell = None
 
     def __init__(self):
@@ -138,7 +145,7 @@ class PlayerControl(object):
             self.__playlistManager = (
                 PlayerControl.rbshell.props.playlist_manager)
         except NameError:
-            print "You need to assign DBAccess.rbshell first!"
+            print "You need to assign PlayerControl.rbshell first!"
             raise
 
     def __loadPlaylists(self):
@@ -161,6 +168,7 @@ class PlayerControl(object):
                 + entry.get_string(RB.RhythmDBPropType.TITLE))
             entries.append((entry_id, title))
         return entries
+
 
     def play(self, unused):
         self.__player.playpause(unused)
@@ -190,11 +198,29 @@ class PlayerControl(object):
             self.__queue.add_entry(self.__dbaccess.get_entry(track[0]), -1)
 
     def add_album_to_queue(self, albumartist, album):
-        print ("albumartist, album is: ", albumartist, album)
         tracks = self.order_track_set(
             self.__dbaccess.get_tracks_of_album(albumartist, album))
         for track in tracks:
             self.__queue.add_entry(self.__dbaccess.get_entry(track[0]), -1)
+
+    def play_album(self, albumartist, album):
+        print ("albumartist, album is: ", albumartist, album)
+        # self.__loadPlaylists()
+        # if ("playingAlbum" in self.__playlists):
+        #     self.__playlistManager.delete_playlist("playingAlbum")
+        # playlist = self.__playlistManager.new_playlist("playingAlbum", False)
+        try:
+            self.__playlistManager.delete_playlist("Album")
+        except:
+            pass
+        playlist = self.__playlistManager.new_playlist("Album", False)
+        tracks = self.order_track_set(
+            self.__dbaccess.get_tracks_of_album(albumartist, album))
+        for track in tracks:
+            uri = self.__dbaccess.get_entry(track[0]).get_playback_uri()
+            self.__playlistManager.add_to_playlist("Album", uri)
+        self.__player.set_playing_source(playlist)
+        self.__player.playpause("unused")
 
     def stop(self):
         self.__player.stop()

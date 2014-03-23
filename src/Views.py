@@ -115,6 +115,14 @@ class Views:
         return "1"
 
     @staticmethod
+    @bottle.route("/play_album/<artist:path>/<album:path>")
+    def view_play_album(artist, album):
+        artist = urllib.unquote_plus(artist)
+        album = urllib.unquote_plus(album)
+        PlayerControl().play_album(artist, album)
+        return "1"
+
+    @staticmethod
     @bottle.route("/play/<name>")
     def play(name):
         # For firefox: Use cache to answer duplicate GET requests.

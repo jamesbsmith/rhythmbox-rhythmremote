@@ -23,6 +23,10 @@ from gsettings import settings
 
 class RhythmRemotePlugin(GObject.Object, Peas.Activatable):
     __gtype_name__ = 'RhythmRemotePlugin'
+    # The plugin class must have a GObject property named 'object',
+    # which is how it receives a reference to the shell object
+    # (an instance of the RBShell class), through which it can
+    # access the rest of the Rhythmbox application.
     object = GObject.Property(type=GObject.GObject)
 
     def __init__(self):

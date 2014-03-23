@@ -88,7 +88,6 @@ function initialize() {
 		});
 	});
 
-
 	$(".ui-page-active a.album_queue_link").click(function() {
 		var $link = $(this);
 		var enc_artist = $link.data("rb-enc-artist");
@@ -103,6 +102,26 @@ function initialize() {
 			var album = $link.data("rb-album");
 			$("#popupTooltip > p.tooltip_content").text(
 					albumartist + ":" + album + " added to queue!");
+			$("#popupTooltip").popup("open", {
+				transition : "pop"
+			});
+		});
+	});
+
+	$(".ui-page-active a.album_play_link").click(function() {
+		var $link = $(this);
+		var enc_artist = $link.data("rb-enc-artist");
+		var enc_album = $link.data("rb-enc-album");
+		var album_id = $link.data("rb-album-id");
+		$.ajax({
+			url  : "/play_album/" + enc_artist + "/" + enc_album,
+			type : "GET"
+		}).success(function() {
+			$("#album_popup_select_" + album_id).popup("close");
+			var albumartist = $link.data("rb-albumartist");
+			var album = $link.data("rb-album");
+			$("#popupTooltip > p.tooltip_content").text(
+					albumartist + ":" + album + " : Now playing.");
 			$("#popupTooltip").popup("open", {
 				transition : "pop"
 			});
