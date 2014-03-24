@@ -38,7 +38,7 @@ Contributors:
                 style="min-width:210px;" 
                 data-theme="b">
             <li data-role="divider" 
-                    data-theme="a">Select Album Action</li>
+                    data-theme="a">Album action:</li>
             <li><a class="album_play_link" 
                     data-rb-enc-album="{{enc_album}}"
                     data-rb-album="{{album[0]}}" 
@@ -52,9 +52,8 @@ Contributors:
                     data-rb-album-id="{{album[1]}}"
                     data-rb-albumartist="{{artist}}" 
                     data-rb-enc-artist="{{enc_artist}}"
-                    href="#">Add album to queue</a></li>
+                    href="#">Add album to Queue</a></li>
             <li><a href="#">Add album to Playlist</a></li>
-            <li><a href="#">Properties</a></li>
         </ul>
     </div>
 %end

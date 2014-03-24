@@ -10,6 +10,14 @@ Contributors:
     James B. Smith - improve browsing
 -->
 
+% # track[0] = track entry-id.
+% # track[1] = disc/track number.
+% # track[2] = track name.
+
+%import urllib
+%enc_artist = urllib.quote_plus(artist)
+%enc_album = urllib.quote_plus(album)
+
 <ul data-role="listview" data-inset="true" 
         data-filter="true" data-autodividers="false">
 	%for track in tracks:
@@ -25,7 +33,7 @@ Contributors:
         id="popup_select_{{track[0]}}" data-theme="a">
 	<ul data-role="listview" data-inset="true" 
 	        style="min-width:210px;" data-theme="b">
-		<li data-role="divider" data-theme="a">Select action</li>
+		<li data-role="divider" data-theme="a">Track action:</li>
 		<li><a class="track_play_link" 
 		    data-rb-entry-id="{{track[0]}}" 
 		    data-rb-entry-name="{{track[2]}}" 
@@ -36,12 +44,15 @@ Contributors:
 		    href="#">Add track to Queue</a></li>
 		<li><a class="track_album_play_link" 
 		    data-rb-entry-id="{{track[0]}}" 
-		    data-rb-entry-name="{{track[2]}}" 
+		    data-rb-enc-artist="{{enc_artist}}" 
+		    data-rb-enc-albumartist="{{artist}}" 
+		    data-rb-enc-album="{{enc_album}}" 
+		    data-rb-album="{{album}}" 
 		    href="#">Play album</a></li>
 		<li><a class="track_album_queue_link" 
 		    data-rb-entry-id="{{track[0]}}" 
 		    data-rb-entry-name="{{track[2]}}" 
-		    href="#">Add album to queue</a></li>
+		    href="#">Add album to Queue</a></li>
 		<li><a href="#">Add to Playlist</a></li>
 		<li><a href="#">Properties</a></li>
 	</ul>

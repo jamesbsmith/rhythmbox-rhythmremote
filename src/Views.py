@@ -61,7 +61,6 @@ class Views:
     @bottle.route("/albums/<artist:path>")
     @bottle.view("albums")
     def albums(artist):
-        print ("artist_enc is:", artist)
         artist = urllib.unquote_plus(artist)
         return dict(
             albums=order_set(DBAccess().get_albums_of_albumartist(artist)),
@@ -74,9 +73,14 @@ class Views:
     def tracks(artist, album):
         albumartist = urllib.unquote_plus(artist)
         album = urllib.unquote_plus(album)
-        return dict(tracks=order_track_set(
-            DBAccess().get_tracks_of_album(albumartist, album)),
-            backlink=("/albums/" + albumartist, albumartist))
+        tracks = order_track_set(
+            DBAccess().get_tracks_of_album(albumartist, album))
+        backlink=("/albums/" + albumartist, albumartist)
+        return dict(
+            tracks=tracks, 
+            artist=albumartist,
+            album=album,
+            backlink=backlink)
 
     @staticmethod
     @bottle.route("/playlist/<playlist:path>")

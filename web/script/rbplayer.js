@@ -88,6 +88,26 @@ function initialize() {
 		});
 	});
 
+	$(".ui-page-active a.track_album_play_link").click(function() {
+		var $link = $(this);
+		var entry_id = $link.data("rb-entry-id");
+		var enc_artist = $link.data("rb-enc-artist");
+		var enc_album = $link.data("rb-enc-album");
+		var albumartist = $link.data("rb-albumartist");
+		var album = $link.data("rb-album");
+		$.ajax({
+			url  : "/play_album/" + enc_artist + "/" + enc_album,
+			type : "GET"
+		}).success(function() {
+			$("#popup_select_" + entry_id).popup("close");
+			$("#popupTooltip > p.tooltip_content").text(
+					albumartist + ":" + album + " : Now playing.");
+			$("#popupTooltip").popup("open", {
+				transition : "pop"
+			});
+		});
+	});
+
 	$(".ui-page-active a.album_queue_link").click(function() {
 		var $link = $(this);
 		var enc_artist = $link.data("rb-enc-artist");
