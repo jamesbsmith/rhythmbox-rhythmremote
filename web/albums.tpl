@@ -11,13 +11,13 @@ Contributors:
 -->
 
 %import urllib
-%enc_artist = urllib.quote_plus(artist)
+%enc_artist = urllib.parse.quote_plus(artist)
 <ul data-role="listview" 
     data-inset="true" 
     data-filter="true" 
     data-autodividers="false">
 	%for album in albums:
-		%enc_album = urllib.quote_plus(album[0])
+		%enc_album = urllib.parse.quote_plus(album[0])
 	    <li><a data-transition="slidefade" 
 	            href="/tracks/{{enc_artist}}/{{enc_album}}">{{album[0]}}</a>
 	         <a class="album_popup_select_link" 
@@ -29,7 +29,7 @@ Contributors:
 	%end
 </ul>
 %for album in albums:
-    %enc_album = urllib.quote_plus(album[0])
+    %enc_album = urllib.parse.quote_plus(album[0])
     <div data-role="popup" 
             data-position-to="origin" 
             id="album_popup_select_{{album[1]}}" data-theme="a">

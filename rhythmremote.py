@@ -8,6 +8,7 @@
 # - Contributors:
 # -     Christian Ertler - initial API and implementation
 # -     James B. Smith - add schema file and preferences dialog
+# -                    - updated for python3 and rhythmbox 3
 # ----------------------------------------------------------------------
 
 import rb
@@ -41,12 +42,12 @@ class RhythmRemotePlugin(GObject.Object, Peas.Activatable):
         # Get port and adress settings from schema
         port = settings.get_int("server-port")
         address = settings.get_string("server-address")
-        print "starting server " + address + ":" + str(port) + " ..."
+        print ("starting server " + address + ":" + str(port) + " ...")
         self.__server = WebServer(address, port, "webplayer.settings")
         self.__server.start()
 
     def do_deactivate(self):
-        print "stopping server..."
+        print ("stopping server...")
         self.__server.stop()
 
     def find_file(self, filename):

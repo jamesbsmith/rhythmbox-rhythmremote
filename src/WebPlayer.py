@@ -33,7 +33,7 @@ class DBAccess(object):
             self.library = DBAccess.rbshell.props.library_source
             self.db = DBAccess.rbshell.props.db
         except NameError:
-            print "You need to assign DBAccess.rbshell first!"
+            print ("You need to assign DBAccess.rbshell first!")
             raise
 
     def get_all_albumartists(self):
@@ -145,7 +145,7 @@ class PlayerControl(object):
             self.__playlistManager = (
                 PlayerControl.rbshell.props.playlist_manager)
         except NameError:
-            print "You need to assign PlayerControl.rbshell first!"
+            print ("You need to assign PlayerControl.rbshell first!")
             raise
 
     def __loadPlaylists(self):
@@ -276,7 +276,7 @@ class PlayerControl(object):
         return self.__player.get_playing_song_duration()
 
     def get_playing_time(self):
-        print self.is_playing()
+        print (self.is_playing())
         if (not self.is_playing()):
             return 0
         return self.__player.get_playing_time()[1]
@@ -303,4 +303,5 @@ class PlayerControl(object):
             return self.__get_source_entries(self.__playlists[playlist])
 
     def order_track_set(self, _set):
-        return sorted(list(_set), cmp=lambda x,y: cmp(x[1], y[1]))
+        return sorted(list(_set), key=lambda x: x[1])
+

@@ -16,7 +16,7 @@ Contributors:
     data-filter="true" 
     data-autodividers="false">
 	    %for artist in artists:
-		    %enc_artist = urllib.quote_plus(artist[2])
+		    %enc_artist = urllib.parse.quote_plus(artist[2])
     	<li><a data-transition="slidefade" 
     	    href="/albums/{{enc_artist}}">{{artist[1]}}</a></li>
 	    %end

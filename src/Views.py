@@ -13,7 +13,7 @@
 import bottle
 import os
 import urllib
-from WebPlayer import DBAccess, PlayerControl
+from src.WebPlayer import DBAccess, PlayerControl
 
 
 class Views:
@@ -27,28 +27,28 @@ class Views:
 
             if web_path is None:
                 web_path = os.path.abspath(path)
-                print "Cant't find web folder! Using: " + web_path
+                print ("Cant't find web folder! Using: " + web_path)
 
             bottle.TEMPLATE_PATH.append(web_path)
         except NameError:
-            print "You need to assign Views.rbplugin first!"
+            print ("You need to assign Views.rbplugin first!")
             raise
 
     @staticmethod
     @bottle.route("/script/<filepath:path>")
     def static_script(filepath):
-        filepath = urllib.unquote_plus(filepath)
+        filepath = urllib.parse.unquote_plus(filepath)
         script_path = ""
         try:
             script_path = Views.rbplugin.find_file("web/script/")
 
             if script_path is None:
                 script_path = os.path.abspath("web/script") + "/"
-                print "Cant't find script folder! Using: " + script_path
+                print ("Cant't find script folder! Using: " + script_path)
 
             return bottle.static_file(filepath, root=script_path)
         except NameError:
-            print "You need to assign Views.rbplugin first!"
+            print ("You need to assign Views.rbplugin first!")
             raise
 
     @staticmethod
@@ -61,7 +61,7 @@ class Views:
     @bottle.route("/albums/<artist:path>")
     @bottle.view("albums")
     def albums(artist):
-        artist = urllib.unquote_plus(artist)
+        artist = urllib.parse.unquote_plus(artist)
         return dict(
             albums=order_set(DBAccess().get_albums_of_albumartist(artist)),
             artist=artist,
@@ -71,8 +71,8 @@ class Views:
     @bottle.route("/tracks/<artist:path>/<album:path>")
     @bottle.view("tracks")
     def tracks(artist, album):
-        albumartist = urllib.unquote_plus(artist)
-        album = urllib.unquote_plus(album)
+        albumartist = urllib.parse.unquote_plus(artist)
+        album = urllib.parse.unquote_plus(album)
         tracks = order_track_set(
             DBAccess().get_tracks_of_album(albumartist, album))
         backlink=("/albums/" + albumartist, albumartist)
@@ -86,7 +86,7 @@ class Views:
     @bottle.route("/playlist/<playlist:path>")
     @bottle.view("playlist")
     def playlist(playlist):
-        playlist = urllib.unquote_plus(playlist)
+        playlist = urllib.parse.unquote_plus(playlist)
         return dict(tracks=PlayerControl().get_playlist_entries(playlist),
                     playlist=playlist,
                     backlink=("/", "Home"))
@@ -113,16 +113,16 @@ class Views:
     @staticmethod
     @bottle.route("/add_album_to_queue/<artist:path>/<album:path>")
     def view_add_album_to_queue(artist, album):
-        artist = urllib.unquote_plus(artist)
-        album = urllib.unquote_plus(album)
+        artist = urllib.parse.unquote_plus(artist)
+        album = urllib.parse.unquote_plus(album)
         PlayerControl().add_album_to_queue(artist, album)
         return "1"
 
     @staticmethod
     @bottle.route("/play_album/<artist:path>/<album:path>")
     def view_play_album(artist, album):
-        artist = urllib.unquote_plus(artist)
-        album = urllib.unquote_plus(album)
+        artist = urllib.parse.unquote_plus(artist)
+        album = urllib.parse.unquote_plus(album)
         PlayerControl().play_album(artist, album)
         return "1"
 
@@ -207,4 +207,4 @@ def order_set(_set):
 
 
 def order_track_set(_set):
-    return sorted(list(_set), cmp=lambda x, y: cmp(x[1], y[1]))
+    return sorted(list(_set), key=lambda x: x[1])

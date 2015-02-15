@@ -15,8 +15,8 @@ Contributors:
 % # track[2] = track name.
 
 %import urllib
-%enc_artist = urllib.quote_plus(artist)
-%enc_album = urllib.quote_plus(album)
+%enc_artist = urllib.parse.quote_plus(artist)
+%enc_album = urllib.parse.quote_plus(album)
 
 <ul data-role="listview" data-inset="true" 
         data-filter="true" data-autodividers="false">

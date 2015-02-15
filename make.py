@@ -8,6 +8,7 @@
 # - Contributors:
 # -     Christian Ertler - initial API and implementation
 # -     James B. Smith - add schema file and preferences dialog
+# -                    - update for python3 rhythmbox 3
 # ------------------------------------------------------------------------------
 
 import os, sys, subprocess, shutil
@@ -22,7 +23,7 @@ def __cmd_exists(cmd):
     try:
         subprocess.call([cmd, '--version'])
     except OSError:
-        print "%s not found on path" % myexec
+        print ("%s not found on path" % myexec)
 
 def __unlink_project():
     if (os.path.lexists(__plugin_dir + __plugin_name.lower())):
